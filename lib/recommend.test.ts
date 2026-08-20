@@ -10,12 +10,14 @@ describe("getRecommendedRecipes", () => {
       {
         name: "애호박전",
         ingredients: ["애호박", "양파", "부침가루"],
+        cuisine: "한식",
         estimatedCostPerServing: 2000,
         cookTimeMinutes: 15,
       },
       {
         name: "감자채볶음",
         ingredients: ["애호박", "감자"],
+        cuisine: "한식",
         estimatedCostPerServing: 1500,
         cookTimeMinutes: 10,
       },
@@ -32,12 +34,14 @@ describe("getRecommendedRecipes", () => {
       {
         name: "애호박전",
         ingredients: ["애호박", "양파", "부침가루"],
+        cuisine: "한식",
         estimatedCostPerServing: 2000,
         cookTimeMinutes: 15,
       },
       {
         name: "닭볶음탕",
         ingredients: ["애호박", "양파", "닭고기"],
+        cuisine: "한식",
         estimatedCostPerServing: 6000,
         cookTimeMinutes: 40,
       },
@@ -53,6 +57,7 @@ describe("getRecommendedRecipes", () => {
     const recipes: Recipe[] = Array.from({ length: 7 }, (_, index) => ({
       name: `레시피${index}`,
       ingredients: ["애호박", "양파"],
+      cuisine: "한식",
       estimatedCostPerServing: 1000,
       cookTimeMinutes: 10,
     }));
