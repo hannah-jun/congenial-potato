@@ -3,16 +3,20 @@ import type { Recipe } from "@/lib/recipes";
 type WeeklyRecommendationProps = {
   cheapIngredientNames: string[];
   recommendedRecipes: Recipe[];
+  householdSize: number;
 };
 
-function formatComment(recipe: Recipe) {
-  const cost = recipe.estimatedCostPerServing.toLocaleString("ko-KR");
-  return `1인분 약 ${cost}원, ${recipe.cookTimeMinutes}분이면 완성!`;
+function formatComment(recipe: Recipe, householdSize: number) {
+  const totalCost = (
+    recipe.estimatedCostPerServing * householdSize
+  ).toLocaleString("ko-KR");
+  return `${householdSize}인분 약 ${totalCost}원, ${recipe.cookTimeMinutes}분이면 완성!`;
 }
 
 export function WeeklyRecommendation({
   cheapIngredientNames,
   recommendedRecipes,
+  householdSize,
 }: WeeklyRecommendationProps) {
   return (
     <div className="flex w-full max-w-2xl flex-col gap-8">
@@ -51,7 +55,7 @@ export function WeeklyRecommendation({
                   {recipe.name}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  {formatComment(recipe)}
+                  {formatComment(recipe, householdSize)}
                 </p>
               </li>
             ))}
