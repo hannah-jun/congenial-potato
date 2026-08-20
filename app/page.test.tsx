@@ -24,7 +24,9 @@ test("초기 설정을 완료하면 추천 화면으로 넘어간다", () => {
   fireEvent.click(screen.getByRole("button", { name: "한식" }));
   fireEvent.click(screen.getByRole("button", { name: "설정 완료" }));
 
-  expect(screen.getByText("애호박")).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "애호박 담기" })
+  ).toBeInTheDocument();
   expect(
     screen.getByRole("heading", { name: "애호박전" })
   ).toBeInTheDocument();

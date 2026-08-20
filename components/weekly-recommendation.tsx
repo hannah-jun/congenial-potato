@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { Recipe } from "@/lib/recipes";
 
 type WeeklyRecommendationProps = {
@@ -18,25 +22,45 @@ export function WeeklyRecommendation({
   recommendedRecipes,
   householdSize,
 }: WeeklyRecommendationProps) {
+  const [cart, setCart] = useState<string[]>([]);
+
+  function toggleCart(itemName: string) {
+    setCart((current) =>
+      current.includes(itemName)
+        ? current.filter((name) => name !== itemName)
+        : [...current, itemName]
+    );
+  }
+
   return (
     <div className="flex w-full max-w-2xl flex-col gap-8">
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-col gap-3" aria-label="이번 주 저렴한 재료">
         <h2 className="text-sm font-medium text-muted-foreground">
           이번 주 저렴한 재료
         </h2>
         <ul className="flex flex-wrap gap-2">
-          {cheapIngredientNames.map((itemName) => (
-            <li
-              key={itemName}
-              className="rounded-full border border-border bg-card px-3 py-1 text-sm text-foreground"
-            >
-              {itemName}
-            </li>
-          ))}
+          {cheapIngredientNames.map((itemName) => {
+            const inCart = cart.includes(itemName);
+            return (
+              <li key={itemName}>
+                <button
+                  type="button"
+                  onClick={() => toggleCart(itemName)}
+                  className={`rounded-full border px-3 py-1 text-sm ${
+                    inCart
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-card text-foreground"
+                  }`}
+                >
+                  {itemName} {inCart ? "빼기" : "담기"}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
-      <section className="flex flex-col gap-3">
+      <section className="flex flex-col gap-3" aria-label="추천 레시피">
         <h2 className="text-sm font-medium text-muted-foreground">
           추천 레시피
         </h2>
@@ -57,6 +81,28 @@ export function WeeklyRecommendation({
                 <p className="text-sm text-muted-foreground">
                   {formatComment(recipe, householdSize)}
                 </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="flex flex-col gap-3" aria-label="장바구니">
+        <h2 className="text-sm font-medium text-muted-foreground">
+          장바구니
+        </h2>
+        {cart.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            아직 담은 재료가 없어요
+          </p>
+        ) : (
+          <ul className="flex flex-wrap gap-2">
+            {cart.map((itemName) => (
+              <li
+                key={itemName}
+                className="rounded-full border border-border bg-card px-3 py-1 text-sm text-foreground"
+              >
+                {itemName}
               </li>
             ))}
           </ul>
