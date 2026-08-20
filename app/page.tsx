@@ -31,9 +31,10 @@ export default function Home() {
   const cheapIngredientNames = cheapIngredients.map((item) => item.itemName);
 
   return (
-    <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-col flex-1 items-center bg-gradient-to-b from-orange-50 via-amber-50 to-white font-sans dark:from-neutral-950 dark:via-neutral-950 dark:to-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center gap-8 py-16 px-6">
-        <h1 className="text-2xl font-semibold text-foreground">
+        <h1 className="text-2xl font-bold text-orange-950 dark:text-orange-50">
+          <span aria-hidden="true">🍳 </span>
           이번 주 뭐 해먹지?
         </h1>
         {settings === undefined ? null : !settings || isEditingSettings ? (
